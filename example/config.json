@@ -1,0 +1,9 @@
+{"options_bot_1":
+  {
+  "token":"<token>",
+  "channelID":"<channelID>",
+  "waitFor":["<userID/botID>"],
+  "forceStart": true,
+  "startMessage": "Why, hello there, young fellas!"
+  }
+}

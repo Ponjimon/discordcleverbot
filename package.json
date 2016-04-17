@@ -1,0 +1,30 @@
+{
+  "name": "discordcleverbot",
+  "version": "1.0.0",
+  "description": "A Discord bot using Cleverbot lel",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node example/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lookapanda/discordcleverbot.git"
+  },
+  "keywords": [
+    "discord",
+    "cleverbot",
+    "lel",
+    "ujelly",
+    "kek"
+  ],
+  "author": "lookapanda",
+  "bugs": {
+    "url": "https://github.com/lookapanda/discordcleverbot/issues"
+  },
+  "homepage": "https://github.com/lookapanda/discordcleverbot#readme",
+  "dependencies": {
+    "cleverbot-node": "^0.2.1",
+    "discord.io": "^1.8.8"
+  }
+}
