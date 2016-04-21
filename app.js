@@ -1,5 +1,6 @@
 var Cleverbot = require('cleverbot-node');
 var DiscordClient = require('discord.io');
+var _ = require('underscore');
 var fs = require('fs');
 
 var DiscordCleverBot = function(opts) {
@@ -45,7 +46,7 @@ DiscordCleverBot.prototype.open = function(reconnected) {
 			}, function(error, messages) {
 				if(error) console.log(error);
 				if(messages.length > 0 && !self.opts.forceStart) {
-					if(self.isWaitingFor(messages[0].author.id)) {
+					if(self.isWaitingFor(messages[0].author.id) || (self.isMentioned(messages[0].mentions))) {
 						console.log(self.bot.username + ' should start...');
 						self.sendMessage(self.opts.channelID, messages[0].content);
 					}
@@ -102,7 +103,7 @@ DiscordCleverBot.prototype.sendMessageInterval = function(channelID) {
 				return;
 			}
 			if(messages.length > 0) {
-				if(self.isWaitingFor(messages[0].author.id)) {
+				if(self.isWaitingFor(messages[0].author.id) || self.isMentioned(messages[0].mentions)) {
 					if((Date.now() - (new Date(messages[0].timestamp))) >= 60000) {
 						console.log(self.bot.username + ' had delay >1m');
 						self.sendMessage(self.opts.channelID, messages[0].content);
@@ -119,10 +120,22 @@ DiscordCleverBot.prototype.pickRandomMessage = function() {
 }
 
 DiscordCleverBot.prototype.onmessage = function(user, userID, channelID, message, rawEvent) {
+	var self = this;
 	if(channelID == this.opts.channelID && this.bot.id != userID) {
 		this.messagePool.push({ userID: userID, message: message });
-		if(this.isWaitingFor(userID)) this.sendMessage(channelID, message);
+		if(this.isWaitingFor(userID) || (this.isMentioned(rawEvent.d.mentions))) this.sendMessage(channelID, message);
 	}
+}
+
+DiscordCleverBot.prototype.isMentioned = function(mentions) {
+	var self = this;
+	return _.find(mentions, function(mention) {
+		if(mention.id == self.bot.id) {
+			return true;
+		}else{
+			return false;
+		}
+	});
 }
 
 DiscordCleverBot.prototype.timeToRespond = function() {

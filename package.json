@@ -25,6 +25,7 @@
   "homepage": "https://github.com/lookapanda/discordcleverbot#readme",
   "dependencies": {
     "cleverbot-node": "^0.2.1",
-    "discord.io": "^1.8.8"
+    "discord.io": "^1.8.8",
+    "underscore": "^1.8.3"
   }
 }
